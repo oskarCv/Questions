@@ -43,10 +43,10 @@ $(document ).ready(function() {
             questionsRef.get().then(function(snapshot){
                 snapshot.forEach(doc =>{
                     let q = doc.data().Questions;
-                    if(q.indexOf(question)!=-1){
-                        firestore.collection("Questions").doc(topicDoc).set({
-                            Questions:Questions.put(question),
-                            Answers:Answer.put(Answer)
+                    if(q.indexOf(question)==-1){
+                       firestore.collection("Questions").doc(topicDoc).set({
+                            Questions:doc.data().Questions.concat(question),
+                            Answers:doc.data().Answers.concat(answer)
                         },
                         {
                             merge:true
