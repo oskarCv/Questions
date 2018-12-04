@@ -10,23 +10,23 @@ $(document ).ready(function() {
     }
     function loadTableData(snapshot){
         let tableRow='';
+        let input='';
         snapshot.forEach(function(doc){
+            input +='Subject: <input type="text" value='+ doc.id+'><br>';
+            for(let i =0;i<doc.data().Questions.length;i++){
             tableRow += '<tr>';
-            tableRow += '<td class="topic">'+doc.id+'</td>';
-            tableRow += '<td class="topic">'+ doc.data().Level+'</td>';
-            tableRow += '<td class="topic">'+ doc.data().Questions +'</td>';
-            tableRow += '<td class="topic">'+ doc.data().Answers+'</td>';
-            tableRow += '<td class="editEmployee"><i class="fa fa-pencil aria-hidden="true" style="color:blue"></i></td>'
-            tableRow += '<td class="editEmployee"><i class="fa fa-trash aria-hidden="true" style="color:red"></i></td>'
-            tableRow += '</tr>';
-            
+                tableRow += '<td class="topic">'+ doc.data().Questions[i] +'</td>';
+                tableRow += '<td class="topic">'+ doc.data().Answers[i]+'</td>';
+                tableRow += '<td class="topic"><a href=#>'+ doc.data().References+'</a></td>';
+                tableRow += '<td class="editEmployee"><i class="fa fa-pencil aria-hidden="true" style="color:blue"></i></td>'
+                tableRow += '<td class="editEmployee"><i class="fa fa-trash aria-hidden="true" style="color:red"></i></td>'
+                tableRow += '</tr>';
+            }
+            console.log(doc.data().Questions.length);
         });
+        $('#Data').html(input);
         $('tbody.tbodyData').html(tableRow);
     }
-    $('#createEmployee').click(function(){
-        $('.employeeForm').css("display", "block");
-        $('#dynamicBtn').text('Save Changes')
-    });
 
     $('#dynamicBtn').click(function(){
         //employee form values
